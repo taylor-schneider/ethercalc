@@ -62,6 +62,7 @@ Note: This should feel like Excel’s Macros dialog + run flow, with a separate 
 ## Editing Concurrency (Details)
 - Lock a macro during edit; other users see who is editing and can request unlock if authorized.
 - Requires backend lock endpoints and storage (MACRO-PLAN/05-backend-api.md).
+- If a macro/UDF changes while a user is viewing the editor, show a non‑blocking banner with the new version info and a “Reload” action.
 
 ## Guided Git UI (Planned)
 - Simple flow with buttons: Connect Repo, Select Branch, Pull, Commit, Push, Cherry-pick.
@@ -71,3 +72,8 @@ Note: This should feel like Excel’s Macros dialog + run flow, with a separate 
 ## Files Likely Touched
 - Client bundle (e.g., `static/ethercalc.js` or build pipeline).
 - SocialCalc tab definitions.
+
+## Remaining todos for planning
+- UI editor technology choice (Monaco vs CodeMirror) is not locked in MACRO-PLAN/06-ui-integration.md.
+- UI elements (macro panels, formula autocomplete) may not align with current client architecture.
+- Choose editor technology and document integration steps.

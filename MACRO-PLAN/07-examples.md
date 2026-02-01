@@ -26,4 +26,5 @@ SocialCalc.Macros.register("FormatReport", function(params) {
 Excel analogies:
 - UDF Example = custom function used in a formula.
 - Macro Example = VBA macro that edits cells and formatting.
+
 ```

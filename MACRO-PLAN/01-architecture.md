@@ -15,5 +15,8 @@ Terminology:
 - **Log** = command history (Excel analogy: a macro-like action log).
 
 Notes:
-- Server-side recalc is authoritative; client-side is UI/interaction.
-- Macro execution must be loaded in the server worker to ensure persistence and correct recalculation.
+- **Where calculations happen**: the server recalculates formulas and macros; the browser mainly displays results and sends edits.
+- **What this implies**: if the browser and server disagree, the server’s result wins and is broadcast to all clients.
+- **Why it matters for macros/UDFs**: macros and UDFs must be loaded in the server worker so recalculation is consistent and persisted.
+- **EtherCalc architecture**: this server‑authoritative model is how EtherCalc works today; the client does not perform the final recalculation. This is to gaurd against intances where multiple clients reference the same sheet; it ensures consistency because it does not trust the client runtime.
+

@@ -64,3 +64,8 @@
 ## Dependencies
 - UI additions described in MACRO-PLAN/06-ui-integration.md.
 - Security policies described in MACRO-PLAN/04-security-permissions.md.
+
+## Remaining todos for planning
+- Repo sync flow details (how `.macro.js` files map to `macroId`, conflict rules) are still thin in MACRO-PLAN/05-backend-api.md.
+- Endpoints and objects might be implemented differently unless strictly aligned with existing server patterns.
+- Specify `.macro.js` mapping rules (file naming → `macroId`, conflicts, updates).

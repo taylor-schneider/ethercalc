@@ -32,3 +32,8 @@ Excel analogy:
 - Backend enforcement in macro execution (server worker) and policy storage (TBD: backend spec file).
 - API endpoints to read/write policies and macro metadata (MACRO-PLAN/05-backend-api.md).
 - UI controls to configure policies, overrides, and prompts (TBD: UI spec file).
+
+## Remaining todos for planning
+- Auth/permissions model for “who can edit/run/lock” lacks concrete roles and auth sources in MACRO-PLAN/04-security-permissions.md.
+- Security/sandboxing: allowing network access safely requires a clear policy and strict runtime isolation.
+- Lock down auth/roles and permission checks for all endpoints.

@@ -6,3 +6,7 @@
 4. **Backend API** endpoints for CRUD/run, repo sync, and locks.
 5. **UI** editor/runner + repo link panels.
 6. **Optional external repo flow** (guided sync UI + `.macro.js` scanning).
+
+## Remaining todos for planning
+- No test plan for macro execution, security limits, and sync in MACRO-PLAN/09-implementation-order.md.
+- Add a test checklist covering UDFs, macros, locking, repo sync, and security limits.

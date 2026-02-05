@@ -1,7 +1,25 @@
 # Backend API
 
+## Table of Contents
+- [Overview](#overview)
+- [Endpoints](#endpoints)
+  - [Macros](#macros)
+  - [Macro Repos](#macro-repos)
+  - [Locks](#locks)
+  - [Policies](#policies)
+- [Object Model](#object-model)
+  - [Macro](#macro)
+  - [MacroRepo](#macro-repo)
+  - [MacroLock](#macrolock)
+  - [GlobalPolicy](#globalpolicy)
+  - [UserPolicyOverride](#userpolicyoverride)
+  - [RoomPolicy](#roompolicy)
+  - [MacroPolicy](#macropolicy)
+- [Error Handling](#error-handling)
+- [Behavior Notes](#behavior-notes)
+
 ## Overview
-- UDFs are used via formulas; macros (action macros) are executed via the run endpoint.
+- UDFs are used via formulas; macros (action macros) are executed via the run endpoint. Type is determined by file extension (`.func.js` for UDFs, `.macro.js` for macros).
 - Repo sync endpoints are only used by the guided UI; execution uses embedded code.
 - Editing uses a lock (mutex) so only one edit session is active at a time.
 - All macro executions should be logged if audit is enabled.
@@ -17,7 +35,7 @@
 - `GET /room/:id/macros/repos` — list macro repos linked to the room.
 - `PUT /room/:id/macros/repos/:repoId` — set/update repo metadata (URL, branch or commit ref).
 - `GET /room/:id/macros/repos/:repoId` — fetch repo metadata.
-- `POST /room/:id/macros/repos/:repoId/sync` — perform explicit repo sync (pull/checkout/cherry-pick). Only `.macro.js` files are loaded as macros.
+- `POST /room/:id/macros/repos/:repoId/sync` — perform explicit repo sync (pull/checkout/cherry-pick). Only `.macro.js` and `.func.js` files are loaded as macros/UDFs.
 
 ### Locks
 - `POST /room/:id/macros/:macroId/lock` — acquire lock.
@@ -25,14 +43,25 @@
 - `GET /room/:id/macros/:macroId/lock` — fetch lock status.
 	- Locking is keyed by `roomId + macroId` (optionally `repoId`), TTL 10–30 minutes, refreshable.
 
+### Policies
+- `GET /policies/global` — retrieve current global policies.
+- `PUT /policies/global` — update global policies (audited; may require server restart for some changes).
+- `GET /policies/user/:userId` — retrieve per-user policy overrides.
+- `PUT /policies/user/:userId` — update per-user policy overrides (audited).
+- `DELETE /policies/user/:userId` — remove per-user policy overrides (audited).
+- `GET /policies/room/:roomId` — retrieve per-room policies.
+- `PUT /policies/room/:roomId` — update per-room policies (saved with room edits).
+- `GET /policies/macro/:macroId` — retrieve per-macro flags (scoped to room context if needed; uses same lock as macro editing).
+- `PUT /policies/macro/:macroId` — update per-macro flags (modified during macro editing; requires same lock as macro).
+
 ## Object Model
 
 ### Macro
 - `macroId`: stable identifier (normalized name, optional UUID for renames).
 - `name`: display name.
-- `type`: `udf` or `macro`.
+- `type`: `udf` or `macro` (inferred from file extension: `.func.js` → `udf`, `.macro.js` → `macro`).
 - `args`: ordered list of argument names.
-- `body`: JS source (or command list).
+- `body`: JS source (single function with optional top-level imports if policy allows).
 - `source`: `embedded` or `repo`.
 - `repoId` (optional): linked repo reference.
 - Name collisions: if two macros normalize to the same `macroId`, reject with `409 Conflict` and require rename (or allow suffixing via UI, e.g., `name-2`).
@@ -53,6 +82,34 @@
 - `ownerDisplayName`: display name for UI.
 - `createdAt`: timestamp.
 - `expiresAt`: timestamp.
+
+### GlobalPolicy
+- `policyVersion`: version string (e.g., "1.0").
+- `settings`: object with sandbox settings (e.g., `{"networkEnabled": false, "maxRuntimeMs": 500}`).
+- `updatedAt`: timestamp.
+- `updatedBy`: admin user ID.
+
+### UserPolicyOverride
+- `userId`: user identifier.
+- `policyVersion`: version string (e.g., "1.0").
+- `overrides`: object with policy overrides (e.g., `{"networkEnabled": true}`).
+- `updatedAt`: timestamp.
+- `updatedBy`: admin user ID.
+
+### RoomPolicy
+- `roomId`: room identifier.
+- `policyVersion`: version string (e.g., "1.0").
+- `settings`: object with room-specific restrictions (e.g., `{"networkEnabled": false}`).
+- `updatedAt`: timestamp.
+- `updatedBy`: user ID.
+
+### MacroPolicy
+- `macroId`: macro identifier.
+- `roomId`: room identifier (for scoping).
+- `policyVersion`: version string (e.g., "1.0").
+- `flags`: object with macro-specific limits (e.g., `{"networkEnabled": false}`).
+- `updatedAt`: timestamp.
+- `updatedBy`: user ID.
 
 ## Errors
 - `400` Validation errors (name, args, payload size).

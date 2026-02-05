@@ -3,7 +3,7 @@
 This plan is split into topic files for easier navigation:
 
 1. Architecture overview: MACRO-PLAN/01-architecture.md
-2. Macro types + execution model: MACRO-PLAN/02-macro-types-and-execution.md
+2. Macro types + execution model: MACRO-PLAN/02-execution-model-for-macros-and-udfs.md
 3. Storage strategy: MACRO-PLAN/03-storage-strategy.md
 4. Security, permissions, and overrides: MACRO-PLAN/04-security-permissions.md
 5. Backend API: MACRO-PLAN/05-backend-api.md

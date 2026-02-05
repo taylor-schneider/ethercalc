@@ -1,13 +1,21 @@
-# Macro Types + Execution Model
+# Execution Model For Macros and UDFs
+
+## Table of Contents
+- [Concepts](#concepts)
+- [Execution Contexts](#execution-contexts)
+- [Execution Flow (High-Level)](#execution-flow-high-level)
+- [Execution Flow Diagram (Boxes + Arrows)](#execution-flow-diagram-boxes--arrows)
 
 ## Concepts
 
-1. **User‑Defined Functions (UDFs)**
-- Pure functions used in formulas (e.g., `=DOUBLE(A1)`).
+**User‑Defined Functions (UDFs)**
+- Pure JS functions defined by the user
+- Able to be referenced / used in worksheet formulas (e.g., `=DOUBLE(A1)`).
 - Excel analogy: UDFs written in VBA or Office Scripts.
 - Must run in the server worker to be authoritative; client registration is only for UX/autocomplete.
 
-2. **Macros (Planned)**
+**Macros**
+- Pure JS implementations
 - Scripted actions that manipulate the workbook (set values, formulas, formats, etc.).
 - Excel analogy: VBA macros that edit cells and formatting.
 - Implemented as SocialCalc command strings and executed in the server worker.

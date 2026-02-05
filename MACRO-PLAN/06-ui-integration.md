@@ -1,5 +1,13 @@
 # UI Integration
 
+## Table of Contents
+- [UI Components (Planned)](#ui-components-planned)
+  - [Menu Items / Entry Points](#menu-items--entry-points)
+  - [Sections / Panels](#sections--panels)
+  - [Forms / Modals](#forms--modals)
+- [User Journey (Excel-Like Flow)](#user-journey-excel-like-flow)
+- [User Journey Flow Diagram](#user-journey-flow-diagram)
+
 ## UI Components (Planned)
 ### Menu Items / Entry Points
 - **Macros** (menu item): opens the Macros workspace (Excel analogy: Macros dialog).
@@ -7,7 +15,7 @@
 ### Sections / Panels
 - **Macro list panel**: list/search macros with type, source (embedded/repo), and status.
 - **Macro settings panel**: permissions, network access, policy summary, and run limits.
-- **Repo link panel**: repo URL, branch selector, pinned commit, status.
+- **Repo link panel**: repo URL, branch selector, pinned commit, status. Scans for `.macro.js` (macros) and `.func.js` (UDFs) files.
 - **Audit panel**: macro run history and errors (if enabled).
 - **Results/Errors panel**: shows the last run output and errors for the selected macro, with a collapsible stack trace when available.
 
@@ -16,6 +24,7 @@
 - **Macro editor form**: name, args, JS body or command list.
 - **Run macro dialog**: select macro, provide parameters, validate inputs on submit, show output/errors in the Results/Errors panel while the sheet stays editable.
 - **Repo sync modal**: pull/commit/push/cherry-pick confirmations and results.
+- **Policy editor modal**: configure sandbox settings (network, timeouts, etc.) for global/room/macro/user levels; shows current effective policy; requires lock for edits; warns on orphaned policies.
 
 ## User Journey (Excel-Like Flow)
 1. **Open Macros** (menu) → **Macros workspace** appears.
@@ -23,7 +32,8 @@
 3. **Save** → macro appears in **Macro list panel**.
 4. **Run macro** (Run button in Macro list or editor toolbar) → **Run macro dialog** → execution results shown.
 5. **Link repo (optional)** → **Repo link panel** → branch selection → **Repo sync modal**.
-6. **Review audit** (optional) → **Audit panel**.
+6. **Edit policies** (Policy button in Macro settings or global admin panel) → **Policy editor modal** → configure settings → save (with lock).
+7. **Review audit** (optional) → **Audit panel**.
 
 ## User Journey Flow Diagram
 
@@ -35,12 +45,12 @@
   |                                     |                              |
   v                                     v                              v
 [Macro List]                      [Macro Settings]                   [Repo Link]
+  |                                     |                              |
+  v                                     v                              v
+[UDF/Macro Editor]        [Results/Errors Panel]              [Policy Editor Modal]
   |                                     |
   v                                     v
-[UDF/Macro Editor]        [Results/Errors Panel]
-  |
-  v
-[Run Macro Dialog] ---> [Results/Errors Panel]
+[Run Macro Dialog]              [Policy Editor Modal]
 
 
 [Repo Link] ---> [Select Branch] ---> [Repo Sync Modal] ---> [Updated Code]
@@ -67,6 +77,7 @@ Note: This should feel like Excel’s Macros dialog + run flow, with a separate 
 ## Guided Git UI (Planned)
 - Simple flow with buttons: Connect Repo, Select Branch, Pull, Commit, Push, Cherry-pick.
 - Branch selection required; diffing and advanced workflows handled by external VCS hosts (e.g., GitHub).
+- Scans repo for `.macro.js` (macros) and `.func.js` (UDFs) files on sync.
 - No embedded terminal in the initial version.
 
 ## Files Likely Touched

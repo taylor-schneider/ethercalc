@@ -35,7 +35,14 @@
 - `GET /room/:id/macros/repos` — list macro repos linked to the room.
 - `PUT /room/:id/macros/repos/:repoId` — set/update repo metadata (URL, branch or commit ref).
 - `GET /room/:id/macros/repos/:repoId` — fetch repo metadata.
+- `GET /room/:id/macros/repos/:repoId/tree` — fetch repo file tree (for file browser UI). Returns JSON tree structure with file types, paths, and last commit info for `.macro.js` and `.func.js` files.
 - `POST /room/:id/macros/repos/:repoId/sync` — perform explicit repo sync (pull/checkout/cherry-pick). Only `.macro.js` and `.func.js` files are loaded as macros/UDFs.
+
+**Repo Sync Flow Details**:
+- **File Mapping**: `.macro.js` files → macros; `.func.js` files → UDFs. `macroId` derived from filename (e.g., `myMacro.macro.js` → `myMacro`).
+- **Conflict Rules**: If `macroId` exists, update code if different; preserve policies unless overridden. New macros added; deleted files remove macros.
+- **Commit Pinning**: Sync pins to specific commit; subsequent syncs check for changes.
+- **Error Handling**: Git errors (e.g., invalid repo) return 400; file parse errors skip invalid files with warnings.
 
 ### Locks
 - `POST /room/:id/macros/:macroId/lock` — acquire lock.
@@ -123,6 +130,7 @@
 - Security policies described in MACRO-PLAN/04-security-permissions.md.
 
 ## Remaining todos for planning
-- Repo sync flow details (how `.macro.js` files map to `macroId`, conflict rules) are still thin in MACRO-PLAN/05-backend-api.md.
-- Endpoints and objects might be implemented differently unless strictly aligned with existing server patterns.
-- Specify `.macro.js` mapping rules (file naming → `macroId`, conflicts, updates).
+- Repo sync flow details (how `.macro.js` files map to `macroId`, conflict rules) are still thin in MACRO-PLAN/05-backend-api.md. **DONE**: Added file mapping, conflict rules, commit pinning, error handling.
+- Endpoints and objects might be implemented differently unless strictly aligned with existing server patterns. **NOTE**: Align with existing patterns (e.g., room-based auth like sheet commands).
+- Specify `.macro.js` mapping rules (file naming → `macroId`, conflicts, updates). **DONE**.
+- Repo file browser API for UI. **DONE**: Added GET /room/:id/macros/repos/:repoId/tree endpoint.

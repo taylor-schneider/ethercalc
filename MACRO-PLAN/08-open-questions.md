@@ -15,4 +15,4 @@
 2. **Compatibility**: Must the macro system keep full backward compatibility with existing SocialCalc save files?
 
 ## Remaining todos for planning
-- Repo sync: define the `.macro.js` → `macroId` mapping rules to avoid ambiguity.
+- Repo sync: define the `.macro.js` → `macroId` mapping rules to avoid ambiguity. **DONE**: `filename.macro.js` → `filename` as `macroId`.

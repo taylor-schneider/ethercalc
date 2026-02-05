@@ -59,12 +59,50 @@ Policies are stored at different levels to match the hierarchy (global → room 
 - Unknown versions are ignored (fallback to defaults).
 - Backward compatibility: older snapshots without policies use global defaults.
 
+### Macro Storage Schema
+Macros are stored in a new snapshot section `--EtherCalc-Macros--` with JSON format for easy parsing. The section includes a version header for compatibility.
+
+**Snapshot Extension Format**:
+```
+--EtherCalc-Macros--
+version: 1.0
+macros: [
+  {
+    "id": "macro_123",
+    "name": "MyMacro",
+    "type": "macro",  // or "udf"
+    "code": "function() { ... }",
+    "args": ["arg1", "arg2"],  // for UDFs
+    "policies": {
+      "networkEnabled": false,
+      "maxRuntimeMs": 1000,
+      "maxSteps": 10000
+    },
+    "source": "embedded",  // or "repo"
+    "repoId": null,  // if sourced from repo
+    "commit": null,  // pinned commit hash
+    "author": "user@example.com",
+    "created": "2023-10-01T12:00:00Z",
+    "modified": "2023-10-01T12:00:00Z"
+  }
+]
+--End-EtherCalc-Macros--
+```
+
+**Parsing Rules**:
+- If version is unknown (e.g., 2.0), skip the entire section (fallback to no macros).
+- Macros with invalid JSON are skipped with warning.
+- UDFs must have `args` array; macros can omit it.
+- Policies default to global if missing.
+
+**Benefits**: Extends existing snapshot format; versioned for future changes; embedded for portability.
+
 ### Dependencies
 - Links to MACRO-PLAN/04-security-permissions.md for hierarchy details.
 - Backend API endpoints for reading/writing policies (MACRO-PLAN/05-backend-api.md), including /policies/* endpoints for all policy levels.
 
 ## Remaining todos for planning
-- Define a versioned snapshot extension for macros so older sheets still load. Proposed approach: add a clearly delimited macro section with a version header, and ignore it if unknown.
-- Backend data schema for macro storage inside snapshots (format + parsing) is not defined in MACRO-PLAN/03-storage-strategy.md.
-- Define a concrete macro storage schema with versioning and backward-compat behavior.
+- Define a versioned snapshot extension for macros so older sheets still load. Proposed approach: add a clearly delimited macro section with a version header, and ignore it if unknown. **DONE**: Added `--EtherCalc-Macros--` section with version header.
+- Backend data schema for macro storage inside snapshots (format + parsing) is not defined in MACRO-PLAN/03-storage-strategy.md. **DONE**: Defined JSON schema with fields for id, name, type, code, args, policies, source, repoId, commit, author, timestamps.
+- Define a concrete macro storage schema with versioning and backward-compat behavior. **DONE**: Schema includes version field; unknown versions skipped.
 

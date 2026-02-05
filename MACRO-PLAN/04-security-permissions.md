@@ -1,17 +1,23 @@
 # Security, Permissions, and Overrides
 
 ## Table of Contents
-- [Baseline Controls](#baseline-controls)
-- [Macro/UDF Syntax and Auto-Detection](#macroud-syntax-and-auto-detection)
-- [Permission Model (Hierarchy)](#permission-model-hierarchy)
-  - [Policy Storage and Consistency](#policy-storage-and-consistency)
-- [Roles and Defaults (Editor vs Viewer)](#roles-and-defaults-editor-vs-viewer)
-  - [Default Macro Permissions (Aligned to Edit vs View)](#default-macro-permissions-aligned-to-edit-vs-view)
-  - [Operation-Level Enforcement](#operation-level-enforcement)
-  - [Policy Hierarchy Interaction](#policy-hierarchy-interaction)
-- [Admin-Granted Overrides](#admin-granted-overrides)
-- [Policy Configuration Examples](#policy-configuration-examples)
-- [Example Errors](#example-errors) 
+- [Security, Permissions, and Overrides](#security-permissions-and-overrides)
+  - [Table of Contents](#table-of-contents)
+  - [Baseline Controls](#baseline-controls)
+  - [Macro/UDF Syntax and Auto-Detection](#macroudf-syntax-and-auto-detection)
+  - [Permission Model (Hierarchy)](#permission-model-hierarchy)
+    - [Policy Storage and Consistency](#policy-storage-and-consistency)
+  - [Roles and Defaults (Editor vs Viewer)](#roles-and-defaults-editor-vs-viewer)
+    - [Default Macro Permissions (Aligned to Edit vs View)](#default-macro-permissions-aligned-to-edit-vs-view)
+    - [Operation-Level Enforcement](#operation-level-enforcement)
+    - [Policy Hierarchy Interaction](#policy-hierarchy-interaction)
+  - [Admin-Granted Overrides](#admin-granted-overrides)
+  - [Policy Configuration Examples](#policy-configuration-examples)
+      - [Room Policy Example](#room-policy-example)
+      - [Macro Policy Example](#macro-policy-example)
+  - [Example Errors](#example-errors)
+  - [Dependencies](#dependencies)
+  - [Remaining todos for planning](#remaining-todos-for-planning)
 
 ## Baseline Controls
 - Sandbox macro code (no filesystem/process access).
@@ -128,9 +134,9 @@ Excel analogy:
 ## Dependencies
 - Backend enforcement in macro execution (server worker) and policy storage (TBD: backend spec file).
 - API endpoints to read/write policies and macro metadata (MACRO-PLAN/05-backend-api.md).
-- UI controls to configure policies, overrides, and prompts (TBD: UI spec file).
+- API permission checks for all endpoints and websocket events (create/edit/run/lock) [07-backend-api-security.md](07-backend-api-security.md).
+- Policy lifecycle (atomic storage, ghost policy prevention, workflow interruption, lock requirements, AST validation, runtime enforcement) — documented in [04-security-permissions.md](04-security-permissions.md).
+- UI controls to configure policies, overrides, and prompts — documented in [06-ui-integration.md](06-ui-integration.md).
 
 ## Remaining todos for planning
-- Security/sandboxing: allowing network access safely requires a clear policy and strict runtime isolation.
-- Lock down permission checks for all endpoints and websocket events (create/edit/run/lock).
-- Implement policy lifecycle: atomic storage with code, ghost policy detection/prevention, workflow interruption for fixes, and lock requirements for edits. Ensure AST validation and runtime enforcement prevent policy bypass.
+

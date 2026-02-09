@@ -1,18 +1,21 @@
 # Backend API Security
 
 ## Table of Contents
-- [Overview](#overview)
-- [Authentication and Authorization](#authentication-and-authorization)
-- [Policy Enforcement](#policy-enforcement)
-- [Locking Mechanism](#locking-mechanism)
-- [Endpoint Security Checks](#endpoint-security-checks)
-  - [Macros Endpoints](#macros-endpoints)
-  - [Macro Repos Endpoints](#macro-repos-endpoints)
-  - [Locks Endpoints](#locks-endpoints)
-  - [Policies Endpoints](#policies-endpoints)
-- [Error Handling](#error-handling)
-- [Audit Logging](#audit-logging)
-- [Dependencies](#dependencies)
+- [Backend API Security](#backend-api-security)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Authentication and Authorization](#authentication-and-authorization)
+  - [Policy Enforcement](#policy-enforcement)
+  - [Locking Mechanism](#locking-mechanism)
+  - [Endpoint Security Checks](#endpoint-security-checks)
+    - [Macros Endpoints](#macros-endpoints)
+    - [Macro Repos Endpoints](#macro-repos-endpoints)
+    - [Locks Endpoints](#locks-endpoints)
+    - [Policies Endpoints](#policies-endpoints)
+  - [Error Handling](#error-handling)
+  - [Integration with broadcast system](#integration-with-broadcast-system)
+  - [Audit Logging](#audit-logging)
+  - [Dependencies](#dependencies)
 
 ## Overview
 This document outlines the security checks required for the backend API endpoints defined in [05-backend-api.md](05-backend-api.md). It integrates with the permission model in [04-security-permissions.md](04-security-permissions.md), ensuring macro operations respect EtherCalc's Editor/Viewer/Admin roles, hierarchical policies, and sandbox constraints.
@@ -139,6 +142,28 @@ Key principles:
 - `403 Forbidden`: Auth/policy violation (e.g., "Permission denied: network access not allowed").
 - `423 Locked`: Resource locked.
 - Other codes as in [05-backend-api.md](05-backend-api.md).
+
+## Integration with broadcast system
+
+We want to ensure that calls to macros through the api will trigger updates to clients that have the worksheet open for editing / viewing.
+
+**Real-time Sync Mechanism:**
+EtherCalc uses a real-time collaboration system (via `player-broadcast.js`) that broadcasts changes to all connected clients. When a macro modifies the spreadsheet data via API, those changes should propagate through the same broadcast mechanism.
+
+**Expected Flow:**
+1. User has sheet open in browser (connected via websocket/SSE)
+2. External system calls macro via API: `POST /room/:roomId/macros/:macroId/run`
+3. Macro executes on server and modifies sheet data (e.g., updates cells)
+4. Server broadcasts those changes to all connected clients
+5. User's open sheet updates in real-time without refresh
+
+**Key Considerations:**
+- The macro would need to modify the sheet state using EtherCalc's internal APIs (not just perform isolated calculations)
+- Changes need to be properly serialized and broadcast through the collaboration layer
+- This is similar to how changes from one user appear instantly for other users in collaborative editing
+
+**Implementation Note:**
+The macro execution engine must integrate with EtherCalc's broadcast system (likely in `player-broadcast.js`). The API endpoint should trigger the same change propagation that manual edits do.
 
 ## Audit Logging
 - Log policy changes, macro executions, and admin actions to DB (e.g., "audit-" + room).

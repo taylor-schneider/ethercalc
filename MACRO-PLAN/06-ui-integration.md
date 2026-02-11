@@ -10,6 +10,8 @@
   - [UI Architecture](#ui-architecture)
     - [Workspace Modes](#workspace-modes)
     - [Layout Diagrams](#layout-diagrams)
+      - [Default Mode Layout](#default-mode-layout)
+      - [Development Mode Layout](#development-mode-layout)
   - [Component Details](#component-details)
     - [Menu Items / Entry Points](#menu-items--entry-points)
     - [Macro Workspace Panels](#macro-workspace-panels)
@@ -17,12 +19,15 @@
     - [Forms / Modals](#forms--modals)
   - [Implementation Considerations](#implementation-considerations)
     - [Error Handling and Lock Waiting UI](#error-handling-and-lock-waiting-ui)
+      - [Error Modals](#error-modals)
+      - [Lock Waiting Modals](#lock-waiting-modals)
     - [Macro Settings (Details)](#macro-settings-details)
     - [Formula UX (Details)](#formula-ux-details)
     - [Editing Concurrency (Details)](#editing-concurrency-details)
     - [Guided Git UI (Planned)](#guided-git-ui-planned)
     - [Files Likely Touched](#files-likely-touched)
   - [Remaining todos for planning](#remaining-todos-for-planning)
+  - [Remaining todos for planning](#remaining-todos-for-planning-1)
 
 ## Overview
 

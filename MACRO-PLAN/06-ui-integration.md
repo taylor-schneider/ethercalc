@@ -33,6 +33,8 @@ The EtherCalc macro system provides two distinct user experiences:
 
 The UI is designed to serve both audiences through a single Macro Workspace that adapts based on user needs and toggles between modes.
 
+Note: Function list UI changes for hierarchical UDF support (autocomplete, function dialog) are detailed in MACRO-PLAN/12-populating-function-list.md.
+
 ## User Journeys
 
 ### End-User Journey (Macro Execution)

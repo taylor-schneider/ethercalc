@@ -179,9 +179,10 @@ macros: [
 ### Dependencies
 - Links to MACRO-PLAN/04-security-permissions.md for hierarchy details.
 - Backend API endpoints for reading/writing policies (MACRO-PLAN/05-backend-api.md), including /policies/* endpoints for all policy levels.
-- Macro snapshot extension and versioned section definition are documented in this file (see Macro Storage Schema). Added `--EtherCalc-Macros--` section with version header.
-- Schema and parsing for Macro storage inside snapshots documented in this file (see Macro Storage Schema) and MACRO-PLAN/03-storage-strategy.md
+- Macro snapshot extension and versioned section definition are documented in this file (see Macro Storage Schema).
+- Schema and parsing for Macro storage inside snapshots documented in this file (see Macro Storage Schema).
+- Updating the FunctionList object in SocialCalc and related updates to EtherCalc detailed in MACRO-PLAN/12-populating-function-list.md
+- UI integration for hierarchical function lists detailed in MACRO-PLAN/06-ui-integration.md and MACRO-PLAN/12-populating-function-list.md
 
-## Remaining todos for planning
-.
+
 

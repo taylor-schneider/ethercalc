@@ -15,7 +15,6 @@
     - [Versioning and Compatibility](#versioning-and-compatibility)
     - [Macro Storage Schema](#macro-storage-schema)
     - [Dependencies](#dependencies)
-  - [Remaining todos for planning](#remaining-todos-for-planning)
 
 ## Background Info about Storage in EtherCalc
 

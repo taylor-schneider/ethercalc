@@ -17,7 +17,6 @@
       - [Macro Policy Example](#macro-policy-example)
   - [Example Errors](#example-errors)
   - [Dependencies](#dependencies)
-  - [Remaining todos for planning](#remaining-todos-for-planning)
 
 ## Baseline Controls
 - Sandbox macro code (no filesystem/process access).
@@ -137,6 +136,3 @@ Excel analogy:
 - API permission checks for all endpoints and websocket events (create/edit/run/lock) [07-backend-api-security.md](07-backend-api-security.md).
 - Policy lifecycle (atomic storage, ghost policy prevention, workflow interruption, lock requirements, AST validation, runtime enforcement) — documented in [04-security-permissions.md](04-security-permissions.md).
 - UI controls to configure policies, overrides, and prompts — documented in [06-ui-integration.md](06-ui-integration.md).
-
-## Remaining todos for planning
-

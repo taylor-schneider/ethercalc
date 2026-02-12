@@ -271,4 +271,4 @@ Note: Function list UI changes for hierarchical UDF support (autocomplete, funct
 - Worksheet integration in Dev Mode depends on internal UI layout specifications, complete as documented in this file.
 
 ## Remaining todos for planning
-- UI editor technology choice (Monaco vs CodeMirror) is not locked in MACRO-PLAN/06-ui-integration.md. **NOTE**: Implementation decision; planning complete.
+- UI editor technology choice locked to Monaco Editor for built-in breakpoint support and debugging features. **NOTE**: Implementation decision; planning complete.

@@ -10,9 +10,6 @@
 5. **UI** editor/runner + repo link panels.
 6. **Optional external repo flow** (guided sync UI + `.macro.js` scanning).
 
-## Remaining todos for planning
-- No test plan for macro execution, security limits, and sync in MACRO-PLAN/09-implementation-order.md. **DONE**: Added test checklist below.
-- Add a test checklist covering UDFs, macros, locking, repo sync, and security limits. **DONE**.
 
 ## Test Checklist
 - **UDF Tests**: Register UDF, call in formula, verify output; test arg validation; test policy blocks.

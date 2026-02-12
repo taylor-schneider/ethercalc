@@ -26,8 +26,8 @@
     - [Editing Concurrency (Details)](#editing-concurrency-details)
     - [Guided Git UI (Planned)](#guided-git-ui-planned)
     - [Files Likely Touched](#files-likely-touched)
+  - [Dependencies](#dependencies)
   - [Remaining todos for planning](#remaining-todos-for-planning)
-  - [Remaining todos for planning](#remaining-todos-for-planning-1)
 
 ## Overview
 
@@ -262,23 +262,13 @@ Note: Function list UI changes for hierarchical UDF support (autocomplete, funct
 - Client bundle (e.g., `static/ethercalc.js` or build pipeline).
 - SocialCalc tab definitions.
 
-## Remaining todos for planning
-- UI editor technology choice (Monaco vs CodeMirror) is not locked in MACRO-PLAN/06-ui-integration.md. **NOTE**: Implementation decision; planning complete.
-- UI elements (macro panels, formula autocomplete) may not align with current client architecture. **NOTE**: Align during implementation; planning specs are ready.
-- Choose editor technology and document integration steps. **NOTE**: Post-planning task.
-- Macro development workflow (edit-run-debug-commit) components integration. **DONE**: Added detailed workflow with Dev Mode, persistent editor, run/debug panel, worksheet integration, and commit/sync.
-- Separate list view vs. IDE integration. **DONE**: Integrated list as collapsible sidebar in Dev Mode; added repo file browser.
-- Define Development Mode and toggle mechanism. **DONE**: Added "What is Development Mode?" section with clear definition, toggle location, and how-to-switch instructions.
-- Worksheet integration in Dev Mode. **DONE**: Changed from "preview" to full worksheet view with split controls (side-by-side, code-only, sheet-only).
-- Update panel descriptions for collapsibility and Dev Mode behavior. **DONE**: Marked sidebars and panels as collapsible; updated locations and behaviors for Dev Mode vs default mode.
-
+## Dependencies
+- Macro development workflow (edit-run-debug-commit) components integration depends on [05-backend-api.md](05-backend-api.md) for macro run endpoints (POST /room/:id/macros/:macroId/run) to enable execution and debugging in the UI.
+- Separate list view vs. IDE integration depends on [05-backend-api.md](05-backend-api.md) for macro list (GET /room/:id/macros) and repo endpoints (GET /room/:id/macros/repos/:repoId/tree, POST /room/:id/macros/repos/:repoId/sync) to populate the collapsible sidebar and file browser in Dev Mode.
+- Update panel descriptions for collapsibility and Dev Mode behavior depends on [05-backend-api.md](05-backend-api.md) for endpoints (e.g., GET /policies/macro/*, lock endpoints) and [04-security-permissions.md](04-security-permissions.md) for policy structures and risk assessment to ensure panels display accurate data and enforce security.
+- UI elements (macro panels, formula autocomplete) alignment depends on current client architecture verification, complete as per codebase analysis in static/ethercalc.js and jQuery UI integration.
+- Define Development Mode and toggle mechanism depends on internal UI architecture definition, complete as documented in this file.
+- Worksheet integration in Dev Mode depends on internal UI layout specifications, complete as documented in this file.
 
 ## Remaining todos for planning
 - UI editor technology choice (Monaco vs CodeMirror) is not locked in MACRO-PLAN/06-ui-integration.md. **NOTE**: Implementation decision; planning complete.
-- UI elements (macro panels, formula autocomplete) may not align with current client architecture. **NOTE**: Align during implementation; planning specs are ready.
-- Choose editor technology and document integration steps. **NOTE**: Post-planning task.
-- Macro development workflow (edit-run-debug-commit) components integration. **DONE**: Added detailed workflow with Dev Mode, persistent editor, run/debug panel, worksheet integration, and commit/sync.
-- Separate list view vs. IDE integration. **DONE**: Integrated list as collapsible sidebar in Dev Mode; added repo file browser.
-- Define Development Mode and toggle mechanism. **DONE**: Added "What is Development Mode?" section with clear definition, toggle location, and how-to-switch instructions.
-- Worksheet integration in Dev Mode. **DONE**: Changed from "preview" to full worksheet view with split controls (side-by-side, code-only, sheet-only).
-- Update panel descriptions for collapsibility and Dev Mode behavior. **DONE**: Marked sidebars and panels as collapsible; updated locations and behaviors for Dev Mode vs default mode.

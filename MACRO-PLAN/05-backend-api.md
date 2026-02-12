@@ -1,22 +1,24 @@
 # Backend API
 
 ## Table of Contents
-- [Overview](#overview)
-- [Endpoints](#endpoints)
-  - [Macros](#macros)
-  - [Macro Repos](#macro-repos)
-  - [Locks](#locks)
-  - [Policies](#policies)
-- [Object Model](#object-model)
-  - [Macro](#macro)
-  - [MacroRepo](#macro-repo)
-  - [MacroLock](#macrolock)
-  - [GlobalPolicy](#globalpolicy)
-  - [UserPolicyOverride](#userpolicyoverride)
-  - [RoomPolicy](#roompolicy)
-  - [MacroPolicy](#macropolicy)
-- [Error Handling](#error-handling)
-- [Behavior Notes](#behavior-notes)
+- [Backend API](#backend-api)
+  - [Table of Contents](#table-of-contents)
+  - [Overview](#overview)
+  - [Endpoints](#endpoints)
+    - [Macros](#macros)
+    - [Macro Repos](#macro-repos)
+    - [Locks](#locks)
+    - [Policies](#policies)
+  - [Object Model](#object-model)
+    - [Macro](#macro)
+    - [MacroRepo](#macrorepo)
+    - [MacroLock](#macrolock)
+    - [GlobalPolicy](#globalpolicy)
+    - [UserPolicyOverride](#userpolicyoverride)
+    - [RoomPolicy](#roompolicy)
+    - [MacroPolicy](#macropolicy)
+  - [Errors](#errors)
+  - [Dependencies](#dependencies)
 
 ## Overview
 - UDFs are used via formulas; macros (action macros) are executed via the run endpoint. Type is determined by file extension (`.func.js` for UDFs, `.macro.js` for macros).
@@ -128,9 +130,6 @@
 ## Dependencies
 - UI additions described in MACRO-PLAN/06-ui-integration.md.
 - Security policies described in MACRO-PLAN/04-security-permissions.md.
+- Repo concepts described in MACRO-PLAN/repo-concept.md.
+- Function list population described in MACRO-PLAN/12-populating-function-list.md.
 
-## Remaining todos for planning
-- Repo sync flow details (how `.macro.js` files map to `macroId`, conflict rules) are still thin in MACRO-PLAN/05-backend-api.md. **DONE**: Added file mapping, conflict rules, commit pinning, error handling.
-- Endpoints and objects might be implemented differently unless strictly aligned with existing server patterns. **NOTE**: Align with existing patterns (e.g., room-based auth like sheet commands).
-- Specify `.macro.js` mapping rules (file naming → `macroId`, conflicts, updates). **DONE**.
-- Repo file browser API for UI. **DONE**: Added GET /room/:id/macros/repos/:repoId/tree endpoint.
